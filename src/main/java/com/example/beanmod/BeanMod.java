@@ -6,33 +6,21 @@ import com.example.beanmod.items.ThrownBeanBomb;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.core.Registry;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.EntityType.Builder;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.PotatoBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.PlantType;
-import net.minecraftforge.common.Tags.Items;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -42,7 +30,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -52,7 +39,6 @@ import org.slf4j.Logger;
 
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("beanmod")
@@ -75,9 +61,9 @@ public class BeanMod
             public static final RegistryObject<EntityType<ThrownBeanBomb>> BEANBOMBENT = ENTITIES.register("beanbomb",
             () -> EntityType.Builder
                     .<ThrownBeanBomb>of(ThrownBeanBomb::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
+                    .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
-                    .updateInterval(20)
+                    .updateInterval(10)
                     .build(new ResourceLocation("beanmod", "beanbomb").toString())
     );
 

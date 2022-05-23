@@ -1,21 +1,23 @@
 package com.example.beanmod;
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+
 import com.google.gson.JsonObject;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Random;
+import net.minecraftforge.registries.RegistryObject;
 
 public class LootMods {
     public static final String MODID = "beanmod";
