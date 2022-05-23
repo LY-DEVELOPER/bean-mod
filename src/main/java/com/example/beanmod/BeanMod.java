@@ -5,6 +5,8 @@ import com.example.beanmod.items.BeanBombRender;
 import com.example.beanmod.items.ThrownBeanBomb;
 import com.mojang.logging.LogUtils;
 
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -126,6 +128,7 @@ public class BeanMod
     @SubscribeEvent
     public static void doSetup(FMLClientSetupEvent event) {
         EntityRenderers.register(BEANBOMBENT.get(), BeanBombRender::new);
+        ItemBlockRenderTypes.setRenderLayer(BEANCROP.get(), RenderType.translucent());
     }
 }
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
