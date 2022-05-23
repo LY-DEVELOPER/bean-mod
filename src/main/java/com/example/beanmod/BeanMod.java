@@ -15,6 +15,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -73,9 +74,9 @@ public class BeanMod
     public static final RegistryObject<Item> BEANBOMB = ITEMS.register("beanbomb",
             () -> new BeanBombItem(new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
     public static final RegistryObject<Item> BEAN = ITEMS.register("bean",
-            () -> new ItemNameBlockItem(BEANCROP.get(), (new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().build()))));
+            () -> new ItemNameBlockItem(BEANCROP.get(), (new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.3F).build()))));
     public static final RegistryObject<Item> BAKEDBEAN = ITEMS.register("bakedbean",
-            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().build())));
+            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6F).build())));
 
 
     public BeanMod()
