@@ -1,5 +1,9 @@
 {
   "itemGroup.beanmod": "Bean Mod Items",
 
-  "item.beanmod.beanbomb": "Bean Bomb"
+  "item.beanmod.beanbomb": "Bean Bomb",
+
+  "item.beanmod.bean": "Bean",
+
+  "item.beanmod.bakedbean": "Baked Bean"
 }

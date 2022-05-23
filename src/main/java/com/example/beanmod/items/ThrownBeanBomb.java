@@ -23,11 +23,11 @@ public class ThrownBeanBomb extends ThrowableItemProjectile {
  }
 
  public ThrownBeanBomb(Level p_37481_, LivingEntity p_37482_) {
-    super(EntityType.SNOWBALL, p_37482_, p_37481_);
+    super(BeanMod.BEANBOMBENT.get(), p_37482_, p_37481_);
  }
 
  public ThrownBeanBomb(Level p_37476_, double p_37477_, double p_37478_, double p_37479_) {
-    super(EntityType.SNOWBALL, p_37477_, p_37478_, p_37479_, p_37476_);
+    super(BeanMod.BEANBOMBENT.get(), p_37477_, p_37478_, p_37479_, p_37476_);
  }
 
  public void handleEntityEvent(byte p_37484_) {
@@ -58,5 +58,5 @@ public class ThrownBeanBomb extends ThrowableItemProjectile {
  protected Item getDefaultItem() {
     return BeanMod.BEANBOMB.get();
  }
-  
 }
+
