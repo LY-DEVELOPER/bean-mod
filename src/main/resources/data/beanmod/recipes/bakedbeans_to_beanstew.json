@@ -1,0 +1,24 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+      "item": "beanmod:bakedbean"
+        },
+        {
+      "item": "beanmod:bakedbean"
+        },
+        {
+      "item": "minecraft:water_bucket"
+        },
+        {
+      "item": "minecraft:sugar"
+        },
+        {
+      "item": "minecraft:bowl"
+        }
+    ],
+    "result": {
+      "item": "beanmod:beanstew",
+      "count": 1
+    }
+  }

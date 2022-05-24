@@ -28,14 +28,8 @@ public class ThrownBeanBomb extends ThrowableItemProjectile {
  }
 
  public void handleEntityEvent(byte p_37484_) {
-    if (p_37484_ == 3) {
-
-
-       for(int i = 0; i < 8; ++i) {
-          this.level.addParticle(ParticleTypes.LAVA, this.getX(), this.getY(), this.getZ(), 10D, 10D, 10D);
-       }
-    }
-
+   for(int i = 0; i < 5; i++)
+   this.level.addParticle(ParticleTypes.BUBBLE, this.getX(), this.getY(), this.getZ(), 10D, 10D, 10D);
  }
 
  protected void onHitEntity(EntityHitResult p_37486_) {
@@ -46,7 +40,7 @@ public class ThrownBeanBomb extends ThrowableItemProjectile {
  protected void onHit(HitResult p_37488_) {
     super.onHit(p_37488_);
     if (!this.level.isClientSide) {
-             this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 4.0F, Explosion.BlockInteraction.BREAK);
        }
        this.level.broadcastEntityEvent(this, (byte)3);
        this.discard();

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-      "layer0": "beanmod:items/beanbomb"
+      "layer0": "beanmod:item/beanbomb"
   }
 }
