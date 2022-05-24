@@ -1,0 +1,9 @@
+[{
+    "item": "minecraft:diamond",
+    "chance": "10"
+},
+{
+    "item": "beanmod:magicbean",
+    "chance": "1"
+}
+]

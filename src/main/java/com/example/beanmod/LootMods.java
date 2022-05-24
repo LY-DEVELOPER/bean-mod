@@ -1,4 +1,5 @@
 package com.example.beanmod;
+
 import java.util.List;
 import java.util.Random;
 
@@ -22,14 +23,15 @@ import net.minecraftforge.registries.RegistryObject;
 public class LootMods {
     public static final String MODID = "beanmod";
 
-    public LootMods()
-    {
-            GLM.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public LootMods() {
+        GLM.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    private static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MODID);
+    private static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister
+            .create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MODID);
 
-    private static final RegistryObject<ChickenModifier.Serializer> CHICKEN = GLM.register("chicken", ChickenModifier.Serializer::new);
+    private static final RegistryObject<ChickenModifier.Serializer> CHICKEN = GLM.register("chicken",
+            ChickenModifier.Serializer::new);
 
     private static class ChickenModifier extends LootModifier {
         private final int chance;
@@ -45,7 +47,7 @@ public class LootMods {
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             Random rand = new Random();
-            if(rand.nextInt(3) == chance) {
+            if (rand.nextInt(3) == chance) {
                 generatedLoot.add(new ItemStack(itemReward, 1));
             }
             return generatedLoot;
@@ -56,7 +58,8 @@ public class LootMods {
             @Override
             public ChickenModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
                 int chance = GsonHelper.getAsInt(object, "chance");
-                Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation((GsonHelper.getAsString(object, "item"))));
+                Item item = ForgeRegistries.ITEMS
+                        .getValue(new ResourceLocation((GsonHelper.getAsString(object, "item"))));
                 return new ChickenModifier(conditionsIn, chance, item);
             }
 

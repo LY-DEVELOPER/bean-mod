@@ -1,13 +1,15 @@
 package com.example.beanmod;
 
 import com.example.beanmod.items.BeanBombItem;
-import com.example.beanmod.items.BeanBombRender;
+import com.example.beanmod.items.MagicBeanItem;
 import com.example.beanmod.items.ThrownBeanBomb;
+import com.example.beanmod.items.ThrownMagicBean;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -44,47 +46,53 @@ import org.slf4j.Logger;
 
 import java.util.stream.Collectors;
 
-
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("beanmod")
-public class BeanMod
-{
+public class BeanMod {
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, "beanmod");
 
     public static final RegistryObject<Block> BEANCROP = BLOCKS.register("beancrop",
-            () -> new CropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP)));
+            () -> new CropBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak()
+                    .sound(SoundType.CROP)));
 
-    public static final DeferredRegister<Item> ITEMS = 
-    DeferredRegister.create(ForgeRegistries.ITEMS, "beanmod");
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, "beanmod");
 
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES,
+            "beanmod");
 
-    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES,"beanmod");
-
-            public static final RegistryObject<EntityType<ThrownBeanBomb>> BEANBOMBENT = ENTITIES.register("beanbomb",
+    public static final RegistryObject<EntityType<ThrownBeanBomb>> BEANBOMBENT = ENTITIES.register("beanbomb",
             () -> EntityType.Builder
                     .<ThrownBeanBomb>of(ThrownBeanBomb::new, MobCategory.MISC)
                     .sized(0.25F, 0.25F)
                     .clientTrackingRange(4)
                     .updateInterval(10)
-                    .build(new ResourceLocation("beanmod", "beanbomb").toString())
-    );
-
+                    .build(new ResourceLocation("beanmod", "beanbomb").toString()));
+    public static final RegistryObject<EntityType<ThrownMagicBean>> MAGICBEANENT = ENTITIES.register("magicbean",
+            () -> EntityType.Builder
+                    .<ThrownMagicBean>of(ThrownMagicBean::new, MobCategory.MISC)
+                    .sized(0.25F, 0.25F)
+                    .clientTrackingRange(4)
+                    .updateInterval(10)
+                    .build(new ResourceLocation("beanmod", "magicbean").toString()));
 
     public static final RegistryObject<Item> BEANBOMB = ITEMS.register("beanbomb",
             () -> new BeanBombItem(new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+    public static final RegistryObject<Item> MAGICBEAN = ITEMS.register("magicbean",
+            () -> new MagicBeanItem(new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
     public static final RegistryObject<Item> BEAN = ITEMS.register("bean",
-            () -> new ItemNameBlockItem(BEANCROP.get(), (new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(1).saturationMod(0.3F).build()))));
+            () -> new ItemNameBlockItem(BEANCROP.get(), (new Item.Properties().tab(CreativeModeTab.TAB_FOOD)
+                    .food(new FoodProperties.Builder().nutrition(1).saturationMod(0.3F).build()))));
     public static final RegistryObject<Item> BAKEDBEAN = ITEMS.register("bakedbean",
-            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6F).build())));
+            () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD)
+                    .food(new FoodProperties.Builder().nutrition(5).saturationMod(0.6F).build())));
     public static final RegistryObject<Item> BEANSTEW = ITEMS.register("beanstew",
-            () -> new BowlFoodItem((new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_FOOD).food(new FoodProperties.Builder().nutrition(10).saturationMod(1F).build())));
+            () -> new BowlFoodItem((new Item.Properties()).stacksTo(1).tab(CreativeModeTab.TAB_FOOD)
+                    .food(new FoodProperties.Builder().nutrition(10).saturationMod(1F).build())));
 
-
-    public BeanMod()
-    {
+    public BeanMod() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -98,51 +106,50 @@ public class BeanMod
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
-    private void enqueueIMC(final InterModEnqueueEvent event)
-    {
+    private void enqueueIMC(final InterModEnqueueEvent event) {
         // Some example code to dispatch IMC to another mod
-        InterModComms.sendTo("beanmod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+        InterModComms.sendTo("beanmod", "helloworld", () -> {
+            LOGGER.info("Hello world from the MDK");
+            return "Hello world";
+        });
     }
 
-    private void processIMC(final InterModProcessEvent event)
-    {
+    private void processIMC(final InterModProcessEvent event) {
         // Some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m->m.messageSupplier().get()).
-                collect(Collectors.toList()));
+        LOGGER.info("Got IMC {}",
+                event.getIMCStream().map(m -> m.messageSupplier().get()).collect(Collectors.toList()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
+    public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
         LOGGER.info("HELLO from server starting");
     }
 
     @Mod.EventBusSubscriber(modid = "beanmod", bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public class ClientSetup {
-    @SubscribeEvent
-    public static void doSetup(FMLClientSetupEvent event) {
-        EntityRenderers.register(BEANBOMBENT.get(), BeanBombRender::new);
-        ItemBlockRenderTypes.setRenderLayer(BEANCROP.get(), RenderType.translucent());
+        @SubscribeEvent
+        public static void doSetup(FMLClientSetupEvent event) {
+            EntityRenderers.register(BEANBOMBENT.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(MAGICBEANENT.get(), ThrownItemRenderer::new);
+            ItemBlockRenderTypes.setRenderLayer(BEANCROP.get(), RenderType.translucent());
+        }
     }
-}
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
+
+    // You can use EventBusSubscriber to automatically subscribe events on the
+    // contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents
-    {
+    public static class RegistryEvents {
         @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent)
-        {
+        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             // Register a new block here
             LOGGER.info("HELLO from Register Block");
         }
