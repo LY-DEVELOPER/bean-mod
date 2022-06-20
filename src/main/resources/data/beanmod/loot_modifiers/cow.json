@@ -4,11 +4,11 @@
         "condition": "minecraft:entity_properties",
         "entity": "this",
         "predicate": {
-          "type": "minecraft:chicken"
+          "type": "minecraft:cow"
         }
       }
     ],
-    "chance": 3,
-    "item": "beanmod:bean",
-    "type": "beanmod:chicken"
+    "chance": 50,
+    "item": "beanmod:magicbean",
+    "type": "beanmod:cow"
   }

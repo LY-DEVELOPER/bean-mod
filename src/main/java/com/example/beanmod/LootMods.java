@@ -29,15 +29,16 @@ public class LootMods {
 
     private static final DeferredRegister<GlobalLootModifierSerializer<?>> GLM = DeferredRegister
             .create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, MODID);
+    private static final RegistryObject<MobModifier.Serializer> COW = GLM.register("cow",
+            MobModifier.Serializer::new);
+    private static final RegistryObject<MobModifier.Serializer> CHICKEN = GLM.register("chicken",
+            MobModifier.Serializer::new);
 
-    private static final RegistryObject<ChickenModifier.Serializer> CHICKEN = GLM.register("chicken",
-            ChickenModifier.Serializer::new);
-
-    private static class ChickenModifier extends LootModifier {
+    private static class MobModifier extends LootModifier {
         private final int chance;
         private final Item itemReward;
 
-        public ChickenModifier(LootItemCondition[] conditionsIn, int chanceNum, Item reward) {
+        public MobModifier(LootItemCondition[] conditionsIn, int chanceNum, Item reward) {
             super(conditionsIn);
             chance = chanceNum;
             itemReward = reward;
@@ -47,24 +48,24 @@ public class LootMods {
         @Override
         public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             Random rand = new Random();
-            if (rand.nextInt(3) == chance) {
+            if (rand.nextInt(chance) == 0) {
                 generatedLoot.add(new ItemStack(itemReward, 1));
             }
             return generatedLoot;
         }
 
-        private static class Serializer extends GlobalLootModifierSerializer<ChickenModifier> {
+        private static class Serializer extends GlobalLootModifierSerializer<MobModifier> {
 
             @Override
-            public ChickenModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
+            public MobModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
                 int chance = GsonHelper.getAsInt(object, "chance");
                 Item item = ForgeRegistries.ITEMS
                         .getValue(new ResourceLocation((GsonHelper.getAsString(object, "item"))));
-                return new ChickenModifier(conditionsIn, chance, item);
+                return new MobModifier(conditionsIn, chance, item);
             }
 
             @Override
-            public JsonObject write(ChickenModifier instance) {
+            public JsonObject write(MobModifier instance) {
                 JsonObject json = makeConditions(instance.conditions);
                 json.addProperty("chance", instance.chance);
                 json.addProperty("item", ForgeRegistries.ITEMS.getKey(instance.itemReward).toString());
